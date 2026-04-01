@@ -26,11 +26,17 @@ function useCountdown(targetHours = 8) {
   return time;
 }
 
+const heroImages = [
+  { url: "/assets/images/hero_lush_botanical.png", title1: "Bring Nature", title2: "Into Your Space", desc: "Curated botanicals for a greener home. Delivered healthy, with expert care guides from our botanists." },
+  { url: "/assets/images/hero_minimalist_green.png", title1: "Modern Green", title2: "Living Elevated", desc: "Sleek, minimalist plants that complement any interior. Simple care, maximum impact for your modern home." },
+  { url: "/assets/images/hero_modern_lifestyle.png", title1: "Design Your", title2: "Indoor Oasis", desc: "Turn your living space into a breathable sanctuary with our designer-selected nursery collections." },
+];
+
 const categories = [
-  { name: "Indoor Plants", slug: "Indoor", image: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=500&q=80", count: "40+ varieties", color: "from-green-900/70" },
-  { name: "Succulents", slug: "Succulents", image: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=500&q=80", count: "25+ varieties", color: "from-[#2d6a4f]/70" },
-  { name: "Herbs", slug: "Herbs", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80", count: "18+ varieties", color: "from-emerald-900/70" },
-  { name: "Outdoor", slug: "Outdoor", image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&q=80", count: "30+ varieties", color: "from-[#1b4332]/70" },
+  { name: "Indoor Plants", slug: "Indoor", image: "/assets/images/cat_indoor.png", count: "40+ varieties", color: "from-green-900/70" },
+  { name: "Succulents", slug: "Succulents", image: "/assets/images/cat_succulents.png", count: "25+ varieties", color: "from-[#2d6a4f]/70" },
+  { name: "Herbs", slug: "Herbs", image: "/assets/images/cat_herbs.png", count: "18+ varieties", color: "from-emerald-900/70" },
+  { name: "Outdoor", slug: "Outdoor", image: "/assets/images/cat_outdoor.png", count: "30+ varieties", color: "from-[#1b4332]/70" },
 ];
 
 const perks = [
@@ -53,6 +59,14 @@ const newArrivals = plants.filter(p => [2, 5, 9, 12].includes(p.id));
 
 export default function HomePage() {
   const { h, m, s } = useCountdown(7);
+  const [currentHero, setCurrentHero] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHero((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="page-enter">
@@ -60,22 +74,47 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=1600&q=80" alt="Lush green plants" fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1b4332]/95 via-[#2d6a4f]/75 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1b4332]/40 to-transparent" />
+          {heroImages.map((hero, idx) => (
+            <motion.div
+              key={idx}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: currentHero === idx ? 1 : 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+            >
+              <Image src={hero.url} alt={hero.title1} fill className="object-cover" priority={idx === 0} />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1b4332]/95 via-[#2d6a4f]/75 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1b4332]/40 to-transparent" />
+            </motion.div>
+          ))}
+          {/* Navigation dots */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentHero(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${currentHero === idx ? "w-8 bg-white" : "w-1.5 bg-white/40"}`}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center w-full">
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div 
+            key={currentHero}
+            initial={{ opacity: 0, x: -40 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.8 }}
+          >
             <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white text-sm font-semibold px-4 py-2 rounded-full mb-6 border border-white/20">
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" /> 🌱 Freshly added to our nursery
             </span>
             <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] mb-6">
-              Bring Nature<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8d8b9] to-[#74c69d]">Into Your Space</span>
+              {heroImages[currentHero].title1}<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8d8b9] to-[#74c69d]">{heroImages[currentHero].title2}</span>
             </h1>
             <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-lg">
-              Curated botanicals for a greener home. Delivered healthy, with expert care guides from our botanists.
+              {heroImages[currentHero].desc}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/shop" className="btn-accent flex items-center gap-2 text-base px-7 py-3.5 shadow-xl">
@@ -100,7 +139,7 @@ export default function HomePage() {
             <div className="relative max-w-sm ml-auto">
               <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 border border-white/25 shadow-2xl">
                 <div className="relative h-72 rounded-2xl overflow-hidden mb-4">
-                  <Image src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=600&q=80" alt="Featured Monstera" fill className="object-cover" />
+                  <Image src="/assets/images/monstera_deliciosa.png" alt="Featured Monstera" fill className="object-cover" />
                   <div className="absolute top-3 left-3 bg-gradient-to-r from-[#2d6a4f] to-[#1b4332] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">Best Seller</div>
                 </div>
                 <div className="flex justify-between items-start mb-2">
@@ -333,7 +372,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="relative h-80 md:h-full min-h-72">
-                <Image src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=600&q=80" alt="Plant of the Month" fill className="object-cover" />
+                <Image src="/assets/images/monstera_deliciosa.png" alt="Plant of the Month" fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#1b4332]/30 md:bg-none" />
               </div>
             </div>

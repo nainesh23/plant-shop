@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, SlidersHorizontal, X, ChevronDown, Leaf } from "lucide-react";
+import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import { plants, categories } from "@/data/products";
 import { useSearchParams } from "next/navigation";
@@ -207,14 +208,18 @@ function ShopContent() {
   return (
     <div className="min-h-screen pt-24 pb-20 bg-[#f7faf7] page-enter">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-10 flex items-center gap-3">
-          <div className="h-10 w-1.5 bg-[#2d6a4f] rounded-full" />
-          <div>
-            <h1 className="text-4xl font-extrabold text-[#1a2e1a]">Our Plant Collection</h1>
-            <p className="text-[#6b7c6b] mt-1">
-              Found {filtered.length} botanical varieties
-            </p>
+        {/* Hero Banner */}
+        <div className="relative h-64 mb-10 overflow-hidden rounded-[3rem] border border-[#e8f5e9] shadow-2xl">
+          <Image src="/assets/images/hero_minimalist_green.png" alt="Shop collection" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1b4332]/90 via-[#2d6a4f]/70 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col items-start justify-center px-12">
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+              <span className="inline-flex items-center gap-2 bg-[#74c69d] text-[#1b4332] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4 shadow-xl">
+                 🌿 Curated Collection
+              </span>
+              <h1 className="text-4xl md:text-5xl font-black text-white leading-tight">Our Full Nursery</h1>
+              <p className="text-white/60 mt-2 text-lg">Found {filtered.length} botanical varieties ready for adoption.</p>
+            </motion.div>
           </div>
         </div>
 
