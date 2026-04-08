@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   description:
     "Discover beautiful, healthy plants for your home and garden. Premium indoor plants, succulents, herbs and outdoor plants delivered to your door.",
   keywords: "plants, indoor plants, succulents, herbs, plant shop, buy plants online",
+  icons: {
+    icon: "/assets/Favicon/faviconlogo.png",
+    shortcut: "/assets/Favicon/faviconlogo.png",
+    apple: "/assets/Favicon/faviconlogo.png",
+  },
   openGraph: {
     title: "Leafly — Premium Plant Shop",
     description: "Discover beautiful, healthy plants for your home and garden.",

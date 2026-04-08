@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Leaf, Menu, X, Search, Heart, User, ChevronDown, Phone, Mail, Truck, Package, ChevronRight, Star } from "lucide-react";
+import { ShoppingCart, Menu, X, Search, Heart, User, ChevronDown, Phone, Mail, Truck, Package, ChevronRight, Star } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -102,13 +102,16 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-9 h-9 bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-              <Leaf className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <span className="text-xl font-extrabold text-[#1b4332] tracking-tight">Leafly</span>
-              <span className="hidden sm:block text-[10px] text-[#6b7c6b] -mt-1 leading-none font-bold uppercase tracking-widest">Premium Plant Shop</span>
+          <Link href="/" className="flex items-center group flex-shrink-0">
+            <div className="flex h-[74px] w-[98px] items-center justify-center rounded-[30px] border border-[#dce8df] bg-[linear-gradient(180deg,#ffffff_0%,#f5faf6_100%)] px-3 shadow-[0_14px_34px_rgba(27,67,50,0.12)] ring-1 ring-white transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_18px_38px_rgba(27,67,50,0.16)]">
+              <Image
+                src="/assets/Logo/plant_logo.png"
+                alt="Plant Logo"
+                width={74}
+                height={74}
+                className="h-[60px] w-auto object-contain"
+                priority
+              />
             </div>
           </Link>
 

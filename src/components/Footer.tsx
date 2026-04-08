@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Leaf, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -26,12 +27,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-extrabold tracking-tight">Leafly</span>
-            </div>
+            <Image
+              src="/assets/Logo/plant_logo.png"
+              alt="Leafly Logo"
+              width={120}
+              height={44}
+              className="object-contain brightness-0 invert"
+            />
             <p className="text-white/60 text-sm leading-relaxed">
               Bringing nature closer to you. We source and deliver premium, healthy plants
               that transform any space into a green sanctuary.
